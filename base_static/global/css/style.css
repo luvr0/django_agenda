@@ -1,3 +1,124 @@
-body {
-    background: red;
+* {
+    margin: 0;
+    padding: 0
+}
+
+.background {
+    width: 100vw;
+    height: 100vh;
+    background: rgb(235, 235, 255);
+}
+
+.menu-bar {
+    width: 100vw;
+    height: 20vh;
+}
+
+.menu-bar h1 {
+    font-size: 64px;
+    color: black;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.container-contacts {
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-contacts {
+    width: 95%;
+    height: 90%;
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: auto;
+    background: rgb(255, 255, 255);
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+.table-contacts::-webkit-scrollbar {
+    width: 6px;
+}
+
+.table-contacts::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+}
+
+.table-contacts table {
+    width: 99%;
+    height: 99%;
+    transform: translateX(0.5%);
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+.table-title {
+    font-size: 24px;
+    text-align: center;
+    padding: 5px;
+}
+
+.table-id {
+    color: rgb(103, 96, 197);
+    text-decoration: none;
+}
+
+.table-id:hover {
+    color: rgb(0, 0, 30);
+}
+
+.table-headers {
+    text-align: left;
+    left: 0;
+    padding: 10px 15px;
+    width: 20%;
+    background: rgba(200, 200, 255, 50%);
+}
+
+.table-header {
+    text-align: left;
+    left: 0;
+    padding: 10px 15px;
+}
+
+.table-headers-contacts:hover {
+    background: rgba(0, 0, 0, 0.10) !important
+}
+
+
+.table-contacts tbody tr:nth-child(even) {
+    background: rgba(200, 200, 255, 25%);
+}
+
+.table-contacts tbody tr:nth-child(odd) {
+    background: rgba(200, 200, 255, 15%);
+}
+
+.single-contact {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    left: 10%;
+    bottom: 10%;
+    width: 80%;
+    height: 50%;
+    background: rgb(255, 255, 255);
+    border-radius: 15px;
+    font-size: 24px;
+    font-family: sans-serif;
+}
+
+.single-contact h1 {
+    padding: 5% 10% 2% 10%;
+}
+
+.single-contact p {
+    padding: 5px 10%;
 }

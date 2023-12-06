@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="{% static 'global/css/style.css' %}">
 </head>
 <body>
-  <h1>Document</h1>
+  <section class="background">
+    {% block scope %}{% endblock scope %}
+  </section>
 </body>
 </html>

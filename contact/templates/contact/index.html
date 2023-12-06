@@ -1,1 +1,51 @@
 {% extends "global/base_index.html" %}
+
+{% block scope %}
+    <div class="menu-bar">
+        <h1>AGENDA</h1>
+    </div>
+
+    <div class="container-contacts">
+        <div class="table-contacts">
+            <h2 class="table-title">
+                Contatos
+            </h2>
+            <table>
+                <thead>
+                    <tr class="table-headers">
+                        <th class="table-header">ID</th>
+                        <th class="table-header">First Name</th>
+                        <th class="table-header">Last Name</th>
+                        <th class="table-header">Phone</th>
+                        <th class="table-header">E-mail</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for contact in contacts %}
+                        <tr class="table-headers-contacts">
+                            <td class="table-header">
+                                <a class="table-id" href="{% url "contact:contact" contact.id %}">
+                                    {{ contact.id }}
+                                </a>
+                            </td>
+                            <td class="table-header">
+                                {{ contact.first_name }}
+                            </td>
+                            <td class="table-header">
+                                {{ contact.last_name }}
+                            </td>
+                            <td class="table-header">
+                                {{ contact.phone }}
+                            </td>
+                            <td class="table-header">
+                                {{ contact.email }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+{% endblock scope %}
