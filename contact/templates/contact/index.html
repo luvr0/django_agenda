@@ -7,9 +7,12 @@
 
     <div class="container-contacts">
         <div class="table-contacts">
-            <h2 class="table-title">
-                Contatos
-            </h2>
+            <div class="table-title">
+                <h2>Contatos</h2>
+                <form class="input-search" action="{% url "contact:search" %}" method="get">
+                    <input type="text" placeholder="Pesquisar" name="q" id="search">
+                </form>
+            </div>
             <table>
                 <thead>
                     <tr class="table-headers">
