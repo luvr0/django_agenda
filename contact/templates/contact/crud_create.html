@@ -1,0 +1,41 @@
+{% extends "global/base_index.html" %}
+
+{% block scope %}
+<div class="menu-bar">
+    <h1>AGENDA</h1>
+</div>
+
+<div class="container-contacts">
+    <div class="table-contacts">
+        <div class="table-title">
+            <div>
+
+                <h2>Contatos</h2>
+            
+                <form 
+                  action="{% url "contact:create" %}"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  class="contact-form"
+                >
+                    {% csrf_token %}
+            
+                  <div class="form-group">
+                    <div class="label-container">
+                      <label for="id_first_name">LABEL</label>
+                      <input type="text" name="first_name" maxlength="255" id="id_first_name" class="form-control">
+                    </div>
+                  </div>
+            
+                  <div class="form-group">
+                    <div>
+                      <button type="submit" class="btn-submit">Enviar</button>
+                    </div>
+                  </div>
+            
+                </form>
+              </div>
+        </div>
+    </div>
+</div>
+{% endblock scope %}

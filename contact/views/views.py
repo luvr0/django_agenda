@@ -1,13 +1,18 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from contact.models import Contact
+from django.core.paginator import Paginator
 
 
 def home(request):
-    contacts = Contact.objects.filter(show=True) 
+    contacts = Contact.objects.filter(show=True)
+
+    paginator = Paginator(contacts, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
     text = {
-        'contacts': contacts,
+        'page_obj': page_obj,
         'title_web': 'Contatos -',
     }
 
@@ -30,8 +35,12 @@ def search(request):
         Q(phone__icontains=search_module)
         )
 
+    paginator = Paginator(contacts, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     text = {
-        'contacts': contacts,
+        'page_obj': page_obj,
         'title_web': 'Pesquisa -',
     }
 

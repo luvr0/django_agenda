@@ -10,45 +10,71 @@
             <div class="table-title">
                 <h2>Contatos</h2>
                 <form class="input-search" action="{% url "contact:search" %}" method="get">
-                    <input type="text" placeholder="Pesquisar" name="q" id="search">
+                    <input type="text" placeholder="Pesquisar" name="q" id="search" value="{{ request.GET.q.strip }}">
                 </form>
             </div>
-            <table>
-                <thead>
-                    <tr class="table-headers">
-                        <th class="table-header">ID</th>
-                        <th class="table-header">First Name</th>
-                        <th class="table-header">Last Name</th>
-                        <th class="table-header">Phone</th>
-                        <th class="table-header">E-mail</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {% for contact in contacts %}
-                        <tr class="table-headers-contacts">
-                            <td class="table-header">
-                                <a class="table-id" href="{% url "contact:contact" contact.id %}">
-                                    {{ contact.id }}
-                                </a>
-                            </td>
-                            <td class="table-header">
-                                {{ contact.first_name }}
-                            </td>
-                            <td class="table-header">
-                                {{ contact.last_name }}
-                            </td>
-                            <td class="table-header">
-                                {{ contact.phone }}
-                            </td>
-                            <td class="table-header">
-                                {{ contact.email }}
-                            </td>
+            {% if page_obj %}
+                <table>
+                    <thead>
+                        <tr class="table-headers">
+                            <th class="table-header">ID</th>
+                            <th class="table-header">First Name</th>
+                            <th class="table-header">Last Name</th>
+                            <th class="table-header">Phone</th>
+                            <th class="table-header">E-mail</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
+                    </thead>
 
-            </table>
+                    <tbody>
+                        {% for contact in page_obj %}
+                            <tr class="table-headers-contacts">
+                                <td class="table-header">
+                                    <a class="table-id" href="{% url "contact:contact" contact.id %}">
+                                        {{ contact.id }}
+                                    </a>
+                                </td>
+                                <td class="table-header">
+                                    {{ contact.first_name }}
+                                </td>
+                                <td class="table-header">
+                                    {{ contact.last_name }}
+                                </td>
+                                <td class="table-header">
+                                    {{ contact.phone }}
+                                </td>
+                                <td class="table-header">
+                                    {{ contact.email }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% if page_obj %}
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if page_obj.has_previous %}
+                                <a href="?page=1&q={{ request.GET.q.strip }}">&laquo; ínicio</a>
+                                <a href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q.strip }}">anterior</a>
+                            {% endif %}
+                    
+                            <span class="current">
+                                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                            </span>
+                    
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q.strip }}">próximo</a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}&q={{ request.GET.q.strip }}">fim &raquo;</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div style="font-size: 24px; font-family: sans-serif; padding: 10%; display: flex; justify-content: center;">
+                    <h1>
+                        Nada encontrado.
+                    </h1>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock scope %}
