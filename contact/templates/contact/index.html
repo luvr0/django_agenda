@@ -2,7 +2,19 @@
 
 {% block scope %}
     <div class="menu-bar">
-        <h1>AGENDA</h1>
+        <h1>
+            <a href="{% url "contact:index" %}">AGENDA</a>
+        </h1>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url "contact:create" %}">Teste</a>
+                </li>
+                <li>
+                    <a href="#">Teste</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
     <div class="container-contacts">

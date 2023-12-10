@@ -2,7 +2,9 @@
 
 {% block scope %}
 <div class="menu-bar">
-    <h1>AGENDA</h1>
+  <h1>
+    <a href="{% url "contact:index" %}">AGENDA</a>
+  </h1>
 </div>
 
 <div class="container-contacts">
@@ -10,10 +12,10 @@
         <div class="table-title">
             <div>
 
-                <h2>Contatos</h2>
+                <h2>Contato</h2>
             
                 <form 
-                  action="{% url "contact:create" %}"
+                  action="{{ var_action }}"
                   method="POST"
                   enctype="multipart/form-data"
                   class="contact-form"
@@ -21,15 +23,25 @@
                     {% csrf_token %}
             
                   <div class="form-group">
-                    <div class="label-container">
-                      <label for="id_first_name">LABEL</label>
-                      <input type="text" name="first_name" maxlength="255" id="id_first_name" class="form-control">
-                    </div>
+                    {% for field in form  %}
+                      <div class="label-container">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {{ field.errors }}
+                      </div>
+                    {% endfor %}
                   </div>
-            
+                  <div class="form-group">
+                      {% if form.non_field_errors %}
+                        <div class="error-message">
+                          {{ form.non_field_errors }}
+                        </div>
+                      {% endif %}
+                  </div>
                   <div class="form-group">
                     <div>
                       <button type="submit" class="btn-submit">Enviar</button>
+                    </div>
                     </div>
                   </div>
             
