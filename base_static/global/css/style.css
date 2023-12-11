@@ -205,6 +205,67 @@
     resize: vertical;
 }
 
+.button-container {
+    padding: 2% 10%;
+    width: 75%;
+    display: flex;
+    justify-content: center;
+}
+
+.button-container form {
+    padding: 0 20px;
+    width: 50%;
+}
+
+.button-container a {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 40%;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.button-container a:hover {
+    background-color: #45a049;
+}
+
+.button-single-container {
+    padding: 2% 10%;
+    display: flex;
+    width: 50%;
+}
+
+.button-single-container form {
+    padding: 0 20px;
+    width: 50%;
+}
+
+.button-single-container a {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 25%;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    
+}
+
+.button-single-container a:hover {
+    background-color: #45a049;
+}
+
 .btn-submit {
     background-color: #4CAF50;
     color: white;
@@ -213,6 +274,7 @@
     border-radius: 5px;
     cursor: pointer;
     width: 50%;
+    text-decoration: none;
 }
 
 .btn-submit:hover {
@@ -239,6 +301,6 @@
     font-size: 14px;
     color: tomato;
 }
-.errorlist.nonfield {
+.errorlist .nonfield {
     color: inherit;
 }

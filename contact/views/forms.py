@@ -1,9 +1,13 @@
-from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import password_validation
+from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 from contact.models import Contact
 from django.urls import reverse 
 from django import forms
-from contact.models import Contact
+from typing import Any
 
 class ContactForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -53,7 +57,7 @@ class ContactForm(forms.ModelForm):
 
         return super().clean()
 
-
+@login_required(login_url='contact:login')
 def create(request):
     var_action = reverse('contact:create')
     if request.method == 'POST':
@@ -64,7 +68,9 @@ def create(request):
         }
         
         if form.is_valid():
-            var_save = form.save()
+            var_save = form.save(commit=False)
+            var_save.owner = request.user
+            var_save.save()
             return redirect('contact:update', id=var_save.pk    )
 
         return render(
@@ -83,9 +89,9 @@ def create(request):
         'contact/crud_create.html',
         text
     )
-
+@login_required(login_url='contact:login')
 def update(request, id):
-    up_contact = get_object_or_404(Contact, pk=id, show=True)
+    up_contact = get_object_or_404(Contact, pk=id, show=True, owner=request.user)
     var_action = reverse('contact:update', args=(id,))
     
     if request.method == 'POST':
@@ -115,3 +121,110 @@ def update(request, id):
         'contact/crud_create.html',
         text
     )
+@login_required(login_url='contact:login')
+def delete(request, id):
+    del_contact = get_object_or_404(Contact, pk=id, show=True, owner=request.user)
+
+    del_contact.delete()
+    return redirect('contact:index')
+
+class RegisterForm(UserCreationForm):
+    first_name = forms.CharField(
+        required=True
+    )
+    last_name = forms.CharField(
+        required=True
+    )
+    email = forms.EmailField(
+        required=True
+    )
+
+    class Meta:
+        model = User
+        fields = (
+            'first_name', 'last_name', 'email', 'username', 'password1', 'password2',
+        )
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        
+        if User.objects.filter(email=email).exists():
+            self.add_error(
+                'email',
+                ValidationError('E-mail já existente', code='invalid')
+            )
+
+        return email
+    
+class RegisterUpdate(forms.ModelForm):
+    password1 = forms.CharField(
+        label='Senha',
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        required=False,
+    )
+    password2 = forms.CharField(
+        label='Repetir senha',
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        required=False,
+    )
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'username',)
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        current_email = self.instance.email
+
+        if current_email != email:
+            if User.objects.filter(email=email).exists():
+                self.add_error(
+                    'email',
+                    ValidationError('E-mail já existente', code='invalid')
+                )
+
+        return email
+    
+    def save(self, commit=True):
+        clean_data = self.cleaned_data
+        user = super().save(commit=False)
+        password = clean_data.get('password1')
+
+        if password:
+            user.set_password(password)
+
+        if commit:
+            user.save()
+
+        return user
+
+    def clean(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+
+        if password1 or password2:
+            if password1 != password2:
+                self.add_error(
+                    'password2',
+                    ValidationError('Senhas não batem')
+                )
+
+        return super().clean()
+    
+    def clean_password1(self):
+        password1 = self.cleaned_data.get('password1')
+
+        if password1:
+            try:
+                password_validation.validate_password(password1)
+            except ValidationError as errors:
+                self.add_error(
+                    'password1',
+                    ValidationError(errors)
+                )
+
+
+
+        return password1

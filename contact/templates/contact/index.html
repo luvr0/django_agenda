@@ -7,12 +7,24 @@
         </h1>
         <nav>
             <ul>
-                <li>
-                    <a href="{% url "contact:create" %}">Teste</a>
-                </li>
-                <li>
-                    <a href="#">Teste</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url "contact:create" %}">Criar</a>
+                    </li>
+                    <li>
+                        <a href="{% url "contact:user_update" %}">Perfil</a>
+                    </li>
+                    <li>
+                        <a href="{% url "contact:logout" %}">Deslogar</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url "contact:login" %}">Login</a>
+                    </li>
+                    <li>
+                        <a href="{% url "contact:register" %}">Registro</a>
+                    </li>
+                {% endif %}
             </ul>
         </nav>
     </div>

@@ -12,12 +12,11 @@
         <div class="table-title">
             <div>
 
-                <h2>Contato</h2>
+                <h2>Registro</h2>
             
                 <form 
                   action="{{ var_action }}"
                   method="POST"
-                  enctype="multipart/form-data"
                   class="contact-form"
                 >
                     {% csrf_token %}
@@ -41,7 +40,6 @@
                   <div class="form-group">
                     <div class="button-container">
                       <button type="submit" class="btn-submit">Enviar</button>
-                      <a href="{% url "contact:create" %}" class="btn-submit">Novo</a>
                     </div>
                   </div>
                   </div>
