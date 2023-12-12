@@ -11,9 +11,11 @@
     <div class="table-contacts">
         <div class="table-title">
             <div>
-
+              {% if request.resolver_match.url_name == 'user_update' %}
+                <h2>Atualizar</h2>
+              {% else %}
                 <h2>Registro</h2>
-            
+              {% endif %}
                 <form 
                   action="{{ var_action }}"
                   method="POST"
